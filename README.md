@@ -18,16 +18,18 @@
 
 ## 📌 Overview
 
-Offline Kubernetes RBAC & privilege-path analyzer
+OK8sRbac is an offline Kubernetes RBAC and privilege-path analyzer. It inventories Roles, ClusterRoles, bindings, and ServiceAccounts from YAML, runs detection rules, and traces escalation chains with who-can / what-can queries. Results map to MITRE ATT&CK and CIS 5.1.x and export to TXT, Markdown, JSON, CSV, SARIF, or DOT.
 
 ---
 
 ## ✨ Features
 
-- Stdlib YAML parser + RBAC inventory (Roles, Bindings, SAs, aggregationRule, workload→SA mapping)
-- 34 detection rules, privilege-escalation BFS paths
-- who-can / what-can queries, MITRE + CIS 5.1.x mapping
-- Exports TXT/MD/JSON/CSV/SARIF + DOT graph; --demo ═══════════════════════════════════════════════════════════════ ANSI COLOUR SYSTEM ═══════════════════════════════════════════════════════════════
+- Stdlib YAML parser with RBAC inventory (Roles, Bindings, SAs, aggregationRule, workload→SA mapping)
+- Detection rule set covering privilege escalation with BFS path analysis
+- `--who-can` / subject queries with optional namespace filter
+- Escalation path listing and optional DOT graph export
+- MITRE ATT&CK and CIS 5.1.x mapping; min-severity and fail-on CI gates
+- Exports TXT / MD / JSON / CSV / SARIF / DOT; `--demo` self-test and rule catalogue
 
 ---
 
@@ -41,7 +43,10 @@ Offline Kubernetes RBAC & privilege-path analyzer
 ## 🚀 Usage
 
 ```bash
-./OK8sRbac
+./OK8sRbac --path ./manifests --scan
+./OK8sRbac -p rbac.yaml --who-can get secrets --namespace prod
+./OK8sRbac --paths --format sarif -o rbac.sarif --fail-on high
+./OK8sRbac --help
 ```
 
 ---
